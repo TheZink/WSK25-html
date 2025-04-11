@@ -13,11 +13,11 @@ export const restaurantModal = (name, address, city, postalCode, phone, company,
      modal.innerHTML = `
         <span class="close">&times;</span>
         <h1>${name}</h1>
-        <p>Company: ${company}</p>
-        <p>Address: ${address}, ${city}</p>
-        <p>PostalCode: ${postalCode}</p>
-        <p>Phone: ${phone}</p>
-        <h3> Courses</h3>
+        <p>Yhtiö: ${company}</p>
+        <p>Osoite: ${address}, ${city}</p>
+        <p>Postinro: ${postalCode}</p>
+        <p>Puhnro: ${phone}</p>
+        <h3>Ateriat</h3>
         ${menuHtml}
         `;
 
