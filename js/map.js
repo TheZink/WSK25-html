@@ -1,11 +1,13 @@
 import { fetchData } from "./util.js";
 
 export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUrl, dailyMenuUrl, modalElement, createModal) => {
+
     const blueIcon = L.divIcon({ className: 'blue-icon' }); // Restaurants location color
     const greenIcon = L.divIcon({ className: 'green-icon' }); // Selected restaurant color
     const redIcon = L.divIcon({ className: 'red-icon' }); // User location color
 
     let selectedMarker = null; // To track the currently selected marker
+
 
     // Create the map
     const map = L.map('map').setView([userCoords.latitude, userCoords.longitude], 13);
@@ -13,18 +15,20 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
+
     // Add user location to the map
     const userLocation = L.marker([userCoords.latitude, userCoords.longitude]).addTo(map)
         .bindPopup('Olet täällä');
     userLocation.setIcon(redIcon);
 
-    // Fetch and add restaurants to the map
+
+    // Add restaurants to the map
     try {
         const restaurants = await fetchData(restaurantsUrl);
         restaurants.forEach(restaurant => {
             const coordinates = restaurant.location.coordinates;
 
-            // Create a marker for each restaurant
+            // Create a marker for each restaurant with information
             const restaurantLocation = L.marker([coordinates[1], coordinates[0]], { icon: blueIcon }).addTo(map)
                 .bindPopup(`
                     <b>${restaurant.name}</b> 
@@ -36,11 +40,18 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
 
             // Handle marker click to change color
             restaurantLocation.on('click', () => {
-                if (selectedMarker) selectedMarker.setIcon(blueIcon); // Reset previous marker
-                restaurantLocation.setIcon(greenIcon); // Highlight selected marker
+
+                 // Reset previous marker
+                if (selectedMarker) { selectedMarker.setIcon(blueIcon) };
+
+                // Highlight selected marker
+                restaurantLocation.setIcon(greenIcon); 
+                
+                // Update the selected marker
                 selectedMarker = restaurantLocation;
             });
         });
+        
     } catch (error) {
         console.error('Error fetching restaurant data:', error);
     }
