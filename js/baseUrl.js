@@ -14,13 +14,17 @@ export const urlDailyMenu = (id) => {
 }
 
 // Fetch user login
-export const urlLoginUser = (userId, password) => {
-    const dataJson = {
-        "username": userId.toString(),
-        "password": password.toString()
-    }
-    return {
+export const urlLoginUser = (dataJson) => {
+     return {
         url: 'https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login',
         data: dataJson
     };
+}
+
+export const urlCreateUser = (dataJson) => {
+    return {
+        url: 'https://media2.edu.metropolia.fi/restaurant/api/v1/users',
+        data: dataJson
+    };
+
 }
