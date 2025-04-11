@@ -25,7 +25,7 @@ function success(pos) {
             const coordinates = restaurant.location.coordinates;
             
             L.marker([coordinates[1], coordinates[0]]).addTo(map)
-            .bindPopup(`<b>${restaurant.name}</b> <p>${restaurant.address},${restaurant.city}</p>`,)
+            .bindPopup(`<b>${restaurant.name}</b> <p>${restaurant.address}, ${restaurant.city}</p>`,)
         });
     })
     
@@ -34,7 +34,7 @@ function success(pos) {
     });
 
     L.marker([crd.latitude, crd.longitude]).addTo(map)
-    .bindPopup('You are here')
+    .bindPopup('Olet täällä')
     .openPopup();
 }
   
