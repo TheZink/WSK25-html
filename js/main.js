@@ -1,114 +1,107 @@
 import { urlAllRestaurants, urlRestaurantById, 
-    urlDailyMenu, urlLoginUser } from "./baseUrl.js";
-import { fetchData } from "./util.js";
+    urlDailyMenu} from "./baseUrl.js";
+import { initializeMap } from "./map.js";
 import { restaurantModal } from "./component.js";
+import { logUserIn, createUser } from "./user.js";
 
+// Search.html element
 const searchModal = document.getElementById('restaurantModal');
+const mapContainer = document.getElementById('map');
+
+// Login.html element
+const loginForm = document.getElementById('form');
+const loginName = document.getElementById('loginName');
+const loginPass = document.getElementById('loginPass')
+
+// Register.html element
+const createForm = document.getElementById('createForm');
+const createName = document.getElementById('createName');
+const createPass = document.getElementById('createPass');
+const createEmail = document.getElementById('createEmail')
+
+let userData = null;
+
+const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
 
 // leaflet map
 
-const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
+// Statement check, if "mapContainer" exist before initializing
+if (mapContainer) {
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
 
-function success(pos) {
+    function success(pos) {
 
-    const blueIcon = L.divIcon({ className: 'blue-icon' }); // Restaurants location color
-    const greenIcon = L.divIcon({ className: 'green-icon' }); // Selected restaurant color
-    const redIcon = L.divIcon({ className: 'red-icon' }); // User location color
+        const userCoords = pos.coords;
+        console.log(userData);
 
-    let selectedMarker = null; // To track the currently selected marker
+        // Initialize the map with user location and restaurant data
+        initializeMap(
+            userCoords,
+            urlAllRestaurants(),
+            urlRestaurantById,
+            urlDailyMenu,
+            searchModal,
+            restaurantModal
+        );
+    }
 
+    navigator.geolocation.getCurrentPosition(success, error, options);
 
-    const crd = pos.coords;
-  
-    // Create a map
-    const map = L.map('map').setView([crd.latitude, crd.longitude], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+}
 
-  
-    // Add restaurants to the map
-    fetchData(urlAllRestaurants())
-    .then((restaurants) => {
-        restaurants.forEach(restaurant => {
-            const coordinates = restaurant.location.coordinates;
+// Check if "login" element exist before adding event listener
+if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        const userName = loginName.value;
+        const password = loginPass.value;
 
-            // Create a marker with information
-            const restaurantLocation = L.marker([coordinates[1], coordinates[0]]).addTo(map)
-            .bindPopup(`<b>${restaurant.name}</b> 
-                <p class="popup-p">Osoite: ${restaurant.address}, ${restaurant.postalCode} ${restaurant.city}</p>
-                <p class="popup-p">Puhelinnro: ${restaurant.phone}</p>
-                <p class="popup-p">Yhtiö: ${restaurant.company}</p>
-                <button id="${restaurant._id}">Ruokalista</button>`,)
-            restaurantLocation.setIcon(blueIcon)
-            
-            // Eventlistener to change selected marker's icon to green
-            restaurantLocation.on('click', () => {
+        fetchUser = await logUserIn(userName, password);
 
-                // Reset previously selected marker
-                if (selectedMarker) { selectedMarker.setIcon(blueIcon);}
-
-                // Change selected marker color
-                restaurantLocation.setIcon(greenIcon);
-
-                // Update the selected marker
-                selectedMarker = restaurantLocation;
-                
-            })
-        });
-    })
-    
-    .catch((error) => {
-        console.error('Error fetching restaurant data:', error);
-    });
-
-    // Add users location to the map
-    const userLocation = L.marker([crd.latitude, crd.longitude]).addTo(map)
-        .bindPopup('Olet täällä')
-    userLocation.setIcon(redIcon)
-
-
-    // Eventlistener for popup button
-    map.on('popupopen', (e) => {
-        const popupButton = e.popup._contentNode.querySelector('button');
-
-        if (popupButton) {
-            popupButton.addEventListener('click', async () => {
-                const restData = await fetchData(urlRestaurantById(popupButton.id)) //Fetch selected restaurant information
-                const restMenu = await fetchData(urlDailyMenu(popupButton.id)) //Fetch selected restaurant daily menu
-
-                const { name, address, city, postalCode, phone, company } = restData;
-                const { courses } = restMenu;
-                
-                // Initialize modal-window
-                searchModal.innerHTML = "";
-                
-                const restModal= restaurantModal(name, address, city, postalCode, phone, company, courses);
-
-                searchModal.appendChild(restModal);
-                searchModal.style.display = "block";
-
-                const closeModal = document.querySelector(".close");
-
-                closeModal.addEventListener('click', () => {
-                    searchModal.style.display = "none";
-                });
-                
-            });
+        if (fetchUser) {
+            sessionStorage.setItem('userData', JSON.stringify(fetchUser));
+            console.log(fetchUser);
+        } else {
+            console.log("Login failed")
         }
-    })
-    
 
+    });
+}
+
+// Check if "create" element exist before adding event listener
+if(createForm) {
+    createForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const username = createName.value;
+        const password = createPass.value;
+        const email = createEmail.value;
+        
+        const postUser = createUser(username,password,email);
+
+        if (postUser) {
+            sessionStorage.setItem('userData', JSON.stringify(postUser));
+            console.log(postUser);
+        } else {
+            console.log("Register failed")
+        }
+
+        console.log(postUser);
+    })
+}
+
+if (storedUserData) {
+    console.log('Retrieved user data:', storedUserData);
+    userData = storedUserData; // Restore userData from localStorage
 }
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
+}
 
 
-  
-navigator.geolocation.getCurrentPosition(success, error, options);
