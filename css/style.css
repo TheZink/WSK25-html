@@ -73,3 +73,22 @@ body {
     margin-bottom: 5px;
     position: relative;
 }
+
+/* Leaflet icons*/
+.blue-icon {
+    background-color: #2474ff;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.green-icon {
+    background-color: #27ba35;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.red-icon {
+    background-color: red;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
