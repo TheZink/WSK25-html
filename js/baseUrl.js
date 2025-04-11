@@ -1,14 +1,22 @@
-export const urlRestaurants = () => {
+// Fetch all restaurants
+export const urlAllRestaurants = () => {
     return 'https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants'
 }
 
-export const urlMenu = (id) => {
+// Fetch restaurant by id
+export const urlRestaurantById = (id) => {
+    return `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/${id}`
+}
+
+// Fetch restaurant daily menu by id
+export const urlDailyMenu = (id) => {
     return `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/daily/${id}/fi`
 }
 
-export const urlUser = (id, password) => {
+// Fetch user login
+export const urlLoginUser = (userId, password) => {
     const dataJson = {
-        "username": id.toString(),
+        "username": userId.toString(),
         "password": password.toString()
     }
     return {
