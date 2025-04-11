@@ -16,6 +16,5 @@ export const fetchData = async (url) => {
     } finally {
 
         console.log('Request complete');
-        
     }
 }
