@@ -73,3 +73,80 @@ body {
     margin-bottom: 5px;
     position: relative;
 }
+
+/* Leaflet icons*/
+.blue-icon {
+    background-color: #2474ff;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.green-icon {
+    background-color: #27ba35;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.red-icon {
+    background-color: red;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Leaflet popUp */
+.popup-p {
+    text-align: left;
+    margin-bottom: 1px;
+}
+
+/* Modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.904);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    color: white;
+    margin: 15% auto;
+    top: 50%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+  }
+  
+  .modal-content > li, ul {
+    color: rgb(255, 255, 255);
+    padding: 50px;
+    text-align: left;
+  }
+
+  .modalP {
+    margin-top: 50px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    padding-right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+  }
