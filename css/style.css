@@ -132,9 +132,8 @@ body {
     text-align: left;
   }
 
-  .modal-content > p {
+  .modalP {
     margin-top: 50px;
-    padding-bottom: 1000px;
   }
 
   .close {
