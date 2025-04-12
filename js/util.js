@@ -3,7 +3,8 @@ export const fetchData = async (url) => {
         const request = await fetch(`${url}`);
 
         if (!request.ok){
-            throw new Error(`Fetch error:  ${request.status}`);
+            const errorMessage = await request.text();
+            throw new Error(`Fetch error:  ${request.status} - ${errorMessage}`);
         }
 
         const data = await request.json();
