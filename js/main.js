@@ -90,8 +90,6 @@ if(createForm) {
         } else {
             console.log("Register failed")
         }
-
-        console.log(postUser);
     })
 }
 
