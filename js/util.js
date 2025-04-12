@@ -20,13 +20,12 @@ export const fetchData = async (url) => {
 
 export const fetchDataOptions = async (url, options) => {
     try {
-        console.log(url)
-        console.log(options)
 
         const request = await fetch(`${url}`, options);
-
+        
         if (!request.ok){
-            throw new Error(`Fetch error:  ${request.status}`);
+            const errorMessage = await request.text();
+            throw new Error(`Fetch error:  ${request.status} - ${errorMessage}`);
         }
 
         const data = await request.json();
