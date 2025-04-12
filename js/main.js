@@ -9,7 +9,7 @@ const searchModal = document.getElementById('restaurantModal');
 const mapContainer = document.getElementById('map');
 
 // Login.html element
-const loginForm = document.getElementById('form');
+const loginForm = document.getElementById('loginForm');
 const loginName = document.getElementById('loginName');
 const loginPass = document.getElementById('loginPass')
 
@@ -61,7 +61,7 @@ if (loginForm) {
         const userName = loginName.value;
         const password = loginPass.value;
 
-        fetchUser = await logUserIn(userName, password);
+        const fetchUser = await logUserIn(userName, password);
 
         if (fetchUser) {
             sessionStorage.setItem('userData', JSON.stringify(fetchUser));
@@ -82,7 +82,7 @@ if(createForm) {
         const password = createPass.value;
         const email = createEmail.value;
         
-        const postUser = createUser(username,password,email);
+        const postUser = await createUser(username,password,email);
 
         if (postUser) {
             sessionStorage.setItem('userData', JSON.stringify(postUser));
