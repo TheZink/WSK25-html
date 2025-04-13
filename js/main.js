@@ -65,6 +65,7 @@ window.location.pathname === '/profile.html' && userData != null ? (() => {
 // Check if "login" element exist before adding event listener
 
 loginForm ? (() => {
+
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         
@@ -87,6 +88,7 @@ loginForm ? (() => {
 // Check if "create" element exist before adding event listener
 
 createForm ? (() => {
+
     createForm.addEventListener('submit', async (event) => {
         event.preventDefault();
     
@@ -108,6 +110,7 @@ createForm ? (() => {
 
 // Restore userData from localStorage
 storedUserData ? (() => {
+    
     console.log('Retrieved user data:', storedUserData);
     userData = storedUserData; 
     console.log('userData', userData);
