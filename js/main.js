@@ -103,11 +103,28 @@ createForm ? (() => {
 })() 
 : null;
 
-// Restore userData from localStorage if not null
+// Restore userData from sessionstorage if not null
 if (storedUserData != null) {
     console.log('Retrieved user data from sessionstorage:', storedUserData);
     userData = storedUserData; 
     console.log('userData is:', userData);
+
+    // Add logout button and event listener, when user is logged in
+    const headerElement = document.getElementById('header_a');
+    if (headerElement) {
+        const logout = document.createElement('a');
+        logout.textContent = 'Kirjaudu ulos';
+
+        logout.addEventListener('click', () => {
+            sessionStorage.removeItem('userData');
+            window.location.href = 'home.html';
+
+            window.alert('Sinut kirjataan ulos ja ohjataan etusivulle');
+        });
+
+        headerElement.appendChild(logout);
+    }
+
 } else {
     console.log('No userdata in sessionstorage')
 };
