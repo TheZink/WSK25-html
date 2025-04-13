@@ -53,29 +53,25 @@ mapContainer ? (() => {
 })()
 : null;
 
-// Redirect user to login.html, if userData is null in profile.html
-
-window.location.pathname === '/profile.html' && userData == null ? (() => {
-    window.location.href = 'login.html';
-})()
-: null;
 
 // User login
 // Check if "login" element exist before adding event listener
 
 loginForm ? (() => {
-
+    
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         
         const userName = loginName.value;
         const password = loginPass.value;
-    
+        
         const fetchUser = await logUserIn(userName, password);
-    
+        
+        // If login is succesfull, store login data and redirect user to the profile
         if (fetchUser) {
             sessionStorage.setItem('userData', JSON.stringify(fetchUser));
-            console.log(fetchUser);
+            window.location.href = 'profile.html';
+            console.log('Login succesfull:', fetchUser);
         } else {
             console.log("Login failed")
         }    
@@ -87,19 +83,19 @@ loginForm ? (() => {
 // Check if "create" element exist before adding event listener
 
 createForm ? (() => {
-
+    
     createForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-    
+        
         const username = createName.value;
         const password = createPass.value;
         const email = createEmail.value;
         
         const postUser = await createUser(username,password,email);
-    
+        
         if (postUser) {
             sessionStorage.setItem('userData', JSON.stringify(postUser));
-            console.log(postUser);
+            console.log('Register succesfull: ', postUser);
         } else {
             console.log("Register failed")
         }
@@ -107,18 +103,22 @@ createForm ? (() => {
 })() 
 : null;
 
-// Restore userData from localStorage
-storedUserData != null ? (() => {
-    
-    console.log('Retrieved user data:', storedUserData);
+// Restore userData from localStorage if not null
+if (storedUserData != null) {
+    console.log('Retrieved user data from sessionstorage:', storedUserData);
     userData = storedUserData; 
     console.log('userData is:', userData);
-})()
-: console.log("No user data detected");
+} else {
+    console.log('No userdata in sessionstorage')
+};
 
+// Redirect user to login.html, if userData is null in profile.html
+if (window.location.pathname === '/profile.html' && storedUserData == null){
+    window.location.href = 'login.html';
+}
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
-}
+};
 
 
