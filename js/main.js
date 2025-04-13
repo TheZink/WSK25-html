@@ -11,17 +11,18 @@ const mapContainer = document.getElementById('map');
 // Login.html element
 const loginForm = document.getElementById('loginForm');
 const loginName = document.getElementById('loginName');
-const loginPass = document.getElementById('loginPass')
+const loginPass = document.getElementById('loginPass');
 
 // Register.html element
 const createForm = document.getElementById('createForm');
 const createName = document.getElementById('createName');
 const createPass = document.getElementById('createPass');
-const createEmail = document.getElementById('createEmail')
+const createEmail = document.getElementById('createEmail');
 
 let userData = null;
 
 const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
+const favouriteRestData = JSON.parse(sessionStorage.getItem('favouriteRestData'));
 
 // leaflet map
 // Statement check, if "mapContainer" exist before initializing
@@ -134,8 +135,8 @@ if (window.location.pathname === '/profile.html' && storedUserData == null){
     window.location.href = 'login.html';
 }
 
+// TODO: Add function, that check if favouriteRestData exist
+
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 };
-
-
