@@ -31,5 +31,21 @@ export const createUser = async (username, password, email) => {
 
     return await fetchDataOptions(urlCreateUser(), options);
 }
+
+export const putUser = async (token, updatedData) => {
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            updatedData
+        })
+    };
+
+    return await fetchDataOptions(urlLoginUser, options)
+}
  
 
