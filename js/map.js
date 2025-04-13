@@ -36,6 +36,7 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
                     <p class="popup-p">Puhelinnro: ${restaurant.phone}</p>
                     <p class="popup-p">Yhtiö: ${restaurant.company}</p>
                     <button id="${restaurant._id}">Ruokalista</button>
+                    <button id="fav">Suosikki</button>
                 `);
 
             // Handle marker click to change color
@@ -78,6 +79,15 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
                     modalElement.style.display = "none";
                 });
             });
-        }
+        };
+
+        // Save favourite restaurant to the sessionstorage, when "suosikki" is pressed
+        const favoriteButton = e.popup._contentNode.querySelector('button#fav');
+        if (favoriteButton){
+            favoriteButton.addEventListener('click', () => {
+                const favouriteRest = {favoriteRestaurant: popupButton.id};
+                sessionStorage.setItem('favouriteRestData', JSON.stringify(favouriteRest));
+            });
+        };
     });
 };
