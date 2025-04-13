@@ -18,7 +18,7 @@
                 <div class="header_a">
                     <a href="home.html">Etusivu</a>
                     <a href="search.html">Lähin ravintola</a>
-                    <a href="login.html">Kirjaudu sisään</a>
+                    <a href="profile.html">Profiili</a>
                 </div>
 
             </div>
@@ -28,13 +28,13 @@
                 <h1 style="margin-top: 10px; margin-bottom: 30px; font-size: 50px;">Kirjaudu sisään</h1>
 
                 <p style="margin-bottom: 20px;" id="login-status">Syötä käyttäjätunnuksesi ja salasana. Jos sinulla ei ole vielä käyttäjätunnusta,
-                    niin voit luoda sen <a href="" style="text-decoration: none; font-weight: bold;">tästä</a>
+                    niin voit luoda sen <a href="register.html" style="text-decoration: none; font-weight: bold;">tästä</a>
                 </p>
 
-                <form>
-                    <input type="text" placeholder="Käyttäjätunnus">
-                    <input type="password" placeholder="Salasana">
-                    <button type="submit">Kirjaudu</button>
+                <form id="loginForm">
+                    <input id="loginName" type="text" placeholder="Käyttäjätunnus">
+                    <input id="loginPass" type="password" placeholder="Salasana">
+                    <button id="loginButton" type="submit">Kirjaudu</button>
 
                 </form>
 
