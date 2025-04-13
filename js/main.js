@@ -24,9 +24,10 @@ let userData = null;
 const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
 
 // leaflet map
-
 // Statement check, if "mapContainer" exist before initializing
-if (mapContainer) {
+
+mapContainer ? (() => {
+
     const options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -48,42 +49,53 @@ if (mapContainer) {
             restaurantModal
         );
     }
-
     navigator.geolocation.getCurrentPosition(success, error, options);
+})()
+: null;
 
-}
+// Redirect user to login.html, if userData is null
 
+window.location.pathname === '/profile.html' && userData != null ? (() => {
+    window.location.href = 'login.html';
+    console.log(userData)
+})()
+: null;
+
+// User login
 // Check if "login" element exist before adding event listener
-if (loginForm) {
+
+loginForm ? (() => {
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         
         const userName = loginName.value;
         const password = loginPass.value;
-
+    
         const fetchUser = await logUserIn(userName, password);
-
+    
         if (fetchUser) {
             sessionStorage.setItem('userData', JSON.stringify(fetchUser));
             console.log(fetchUser);
         } else {
             console.log("Login failed")
-        }
-
+        }    
     });
-}
+})() 
+: null;
 
+// User creation
 // Check if "create" element exist before adding event listener
-if(createForm) {
+
+createForm ? (() => {
     createForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-
+    
         const username = createName.value;
         const password = createPass.value;
         const email = createEmail.value;
         
         const postUser = await createUser(username,password,email);
-
+    
         if (postUser) {
             sessionStorage.setItem('userData', JSON.stringify(postUser));
             console.log(postUser);
@@ -91,12 +103,16 @@ if(createForm) {
             console.log("Register failed")
         }
     })
-}
+})() 
+: null;
 
-if (storedUserData) {
+// Restore userData from localStorage
+storedUserData ? (() => {
     console.log('Retrieved user data:', storedUserData);
-    userData = storedUserData; // Restore userData from localStorage
-}
+    userData = storedUserData; 
+    console.log('userData', userData);
+})()
+: console.log("No user data detected");
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
