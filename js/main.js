@@ -2,7 +2,7 @@ import { urlAllRestaurants, urlRestaurantById,
     urlDailyMenu} from "./baseUrl.js";
 import { initializeMap } from "./map.js";
 import { restaurantModal } from "./component.js";
-import { logUserIn, createUser } from "./user.js";
+import { logUserIn, createUser } from "./auth.js";
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
@@ -53,11 +53,10 @@ mapContainer ? (() => {
 })()
 : null;
 
-// Redirect user to login.html, if userData is null
+// Redirect user to login.html, if userData is null in profile.html
 
-window.location.pathname === '/profile.html' && userData != null ? (() => {
+window.location.pathname === '/profile.html' && userData == null ? (() => {
     window.location.href = 'login.html';
-    console.log(userData)
 })()
 : null;
 
@@ -109,13 +108,14 @@ createForm ? (() => {
 : null;
 
 // Restore userData from localStorage
-storedUserData ? (() => {
+storedUserData != null ? (() => {
     
     console.log('Retrieved user data:', storedUserData);
     userData = storedUserData; 
-    console.log('userData', userData);
+    console.log('userData is:', userData);
 })()
 : console.log("No user data detected");
+
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
