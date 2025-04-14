@@ -131,12 +131,11 @@ if (storedUserData != null) {
 };
 
 // Redirect user to login.html, if userData is null in profile.html
-if (window.location.pathname === '/profile.html' && storedUserData == null){
+if (window.location.href.includes('profile.html') && storedUserData == null){
     window.location.href = 'login.html';
 }
 
 // TODO: Add function, that check if favouriteRestData exist
-
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 };
