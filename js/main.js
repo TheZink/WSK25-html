@@ -3,6 +3,7 @@ import { urlAllRestaurants, urlRestaurantById,
 import { initializeMap } from "./map.js";
 import { restaurantModal } from "./component.js";
 import { logUserIn, createUser } from "./auth.js";
+import { postUserData, showUserData } from "./profile.js";
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
@@ -18,6 +19,12 @@ const createForm = document.getElementById('createForm');
 const createName = document.getElementById('createName');
 const createPass = document.getElementById('createPass');
 const createEmail = document.getElementById('createEmail');
+
+// Profile.html element
+const profileContainer = document.getElementById('profile');
+const profileUpdate = document.getElementById('profileUpdate')
+
+
 
 let userData = null;
 
@@ -104,6 +111,37 @@ createForm ? (() => {
 })() 
 : null;
 
+//Profile
+// Check if "profileContainer" exist before executing and adding event listeners
+profileContainer ? (() => {
+
+    showUserData(storedUserData.data, profileContainer);
+    const updateButton = document.querySelector('#updateB');
+    const deleteButton = document.querySelector('#deleteB');
+
+    if (updateButton) {
+        updateButton.addEventListener('click', () => {
+            window.location.href = '/profileupdate.html'
+        })
+
+    }
+
+    if (deleteButton) {
+        deleteButton.addEventListener('click', () => {
+            console.log("Delete pressed")
+        })
+    }
+})()
+:null;
+
+profileUpdate ? (() => {
+    postUserData(storedUserData.data, profileUpdate);
+    //TODO: Eventlistener
+
+})()
+:null;
+
+
 // Restore userData from sessionstorage if not null
 if (storedUserData != null) {
     console.log('Retrieved user data from sessionstorage:', storedUserData);
@@ -130,7 +168,7 @@ if (storedUserData != null) {
     console.log('No userdata in sessionstorage')
 };
 
-// Redirect user to login.html, if userData is null in profile.html
+// Redirect for unauthenticated users accessing profile.html
 if (window.location.href.includes('profile.html') && storedUserData == null){
     window.location.href = 'login.html';
 }

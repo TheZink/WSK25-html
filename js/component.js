@@ -27,3 +27,16 @@ export const restaurantModal = (name, address, city, postalCode, phone, company,
 
     return modal;
 };
+
+export const userModal = (data) => {
+    const modal = document.createElement('ul');
+
+    modal.innerHTML = `<span class="Close">&times;</span>
+                        <h2>Päivitä tietosi</h2> 
+                        <input id="username" type="text" placeholder="${data.username}">
+                        <input id="email" type="email" placeholder="${data.email}">
+                        <input id="username" type="text" placeholder="Aseta profiilikuvan url">
+                        <button id="postButton">Päivitä</button>`
+   
+    return modal;
+}

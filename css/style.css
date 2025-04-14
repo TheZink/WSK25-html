@@ -1,80 +1,188 @@
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
-    
 }
 
+/* Body Styling */
 body {
-    background-image: url('../assets/backgroung.jpeg');
+    background-image: url('../assets/backgroung.jpeg'); /* tarkista tiedostonimi! */
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-color: white;
-    margin: auto;
-    padding: 48px;
+    color: #f0f0f0;
+    line-height: 1.6;
 }
 
+/* Container */
 .container {
-    width: 60%; 
-    max-width: 1200px; 
-    background-color: #4E342E;
-    padding: 32px;
-    margin: auto;
-    margin-bottom: 300px;
-    border-radius : 10px;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.719);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
 }
 
+/* Header */
 .header {
-    background-color: #b6a689;
-    padding: 15px;
+    background-color: rgba(40, 40, 40, 0.85);
+    color: #ffffff;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 10px;
+}
+
+.header h1 {
+    font-size: 24px;
 }
 
 .header_a {
+    display: flex;
+    gap: 20px;
+}
+
+.header_a a {
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-.header_a > a {
-    text-decoration: none;
-    margin: 20px;
-    color: #D6D6D6;
+.header_a a:hover {
+    color: #ffc107;
 }
 
-.header_a > a:hover {
-    color: #7D3C40;
-}
-
-.header_a > a:active {
-    color: #7D3C40;
-}
-
-.box {
-    width: 80%;
-    padding: 0px;
-    margin: auto;
-    text-align: center;
-}
-
-.content {
-    margin-top: 0;
-    background: linear-gradient(to bottom, #b6a689, #ccc);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    padding: 24px 16px;
+/* Buttons */
+button {
+    display: inline-block;
+    padding: 10px 20px;
     font-size: 16px;
-    margin-bottom: 5px;
-    position: relative;
+    color: #000;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Leaflet icons*/
+button:hover {
+    background-color: #e0a800;
+}
+
+/* Forms */
+form {
+    margin: 20px 0;
+}
+
+form input, form textarea, form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form input:focus, form textarea:focus, form select:focus {
+    border-color: #ffc107;
+    outline: none;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.profile-container h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.profile-container img {
+    display: block;
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin: 20px auto;
+    border: 2px solid #ddd;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    margin: 15% auto;
+    top: 50%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.modal-content > li,
+.modal-content > ul {
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+}
+
+.modalP {
+    margin-top: 50px;
+}
+
+.close {
+    color: #ccc;
+    float: right;
+    padding-right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Leaflet Icons */
 .blue-icon {
     background-color: #2474ff;
     border-radius: 50%;
@@ -93,60 +201,17 @@ body {
     border: 5px solid rgba(255, 255, 255, 0.5);
 }
 
-/* Leaflet popUp */
-.popup-p {
-    text-align: left;
-    margin-bottom: 1px;
+/* Footer */
+.footer {
+    background-color: rgba(40, 40, 40, 0.9);
+    color: #dddddd;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
-/* Modal */
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    height: 50%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.904);
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    color: white;
-    margin: 15% auto;
-    top: 50%;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 8px;
-  }
-  
-  .modal-content > li, ul {
-    color: rgb(255, 255, 255);
-    padding: 50px;
-    text-align: left;
-  }
-
-  .modalP {
-    margin-top: 50px;
-  }
-
-  .close {
-    color: #aaa;
-    float: right;
-    padding-right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-  }
+.footer p {
+    margin: 0;
+    font-size: 14px;
+}

@@ -1,4 +1,4 @@
-import { urlCreateUser, urlLoginUser } from "./baseUrl.js"
+import { urlUser, urlLoginUser } from "./baseUrl.js"
 import { fetchDataOptions } from "./util.js"
 
 
@@ -29,7 +29,7 @@ export const createUser = async (username, password, email) => {
         })
     };
 
-    return await fetchDataOptions(urlCreateUser(), options);
+    return await fetchDataOptions(urlUser(), options);
 }
 
 export const putUser = async (token, updatedData) => {
@@ -38,14 +38,27 @@ export const putUser = async (token, updatedData) => {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer: ${token}`
         },
         body: JSON.stringify({
             updatedData
         })
     };
 
-    return await fetchDataOptions(urlLoginUser, options)
+    return await fetchDataOptions(urlUser, options)
 }
+
+// For future use. Require URL fix
+// export const getUserData = async (token) => {
+    
+//     const options = {
+//         headers: {
+//             Authorization: 'Bearer ' + token
+//         }
+//     };
+//     console.log('Auth getUserData', options)
+
+//     return await fetchDataOptions(urlUserData, options)
+// };
  
 
