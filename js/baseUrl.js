@@ -23,12 +23,7 @@ export const urlLoginUser = () => {
      return 'https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login'
 }
  
-// Create user
-export const urlCreateUser = () => {
+// Create or get user
+export const urlUser = () => {
     return 'https://media2.edu.metropolia.fi/restaurant/api/v1/users'
 };
-
-// Get user data
-export const urlGetUserData = () => {
-    return 'https://media2.edu.metropolia.fi/restaurant/api/v1/users/token'
-}
