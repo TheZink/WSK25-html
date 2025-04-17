@@ -18,7 +18,7 @@ export const showUserData = (data, element) => {
 };
 
 export const postUserData = (data, element) => {
-    console.log("Menimme postUserData")
+    console.log("Menimme postUserData ja data on: ", data)
     element.innerHTML = `<h1 style="margin-top: 10px; margin-bottom: 30px; font-size: 50px;">Päivitä tietosi</h1>
                         <h3>Päivitä haluamasi tiedot. Jätä kentät tyhjäksi, jos et halua muuttaa niitä</h3>
                         <p>&nbsp;</p>
@@ -27,14 +27,16 @@ export const postUserData = (data, element) => {
                         <input id="userName" type="text" placeholder="${data.username}">
                         <p>&nbsp;</p>
 
+                        <p>Salasana</p>
+                        <input id="userPassword" type="password" placeholder="Syötä uusi salasana">
+                        <p>&nbsp;</p>
+
                         <p>Sähköpostiosoite</p>
-                        <input id="userEmail" type="password" placeholder="${data.email}">
+                        <input id="userEmail" type="emain" placeholder="${data.email}">
                         <p>&nbsp;</p>
 
                         <p>Profiilikuvan url-osoite</p>
-                        <input id="userAvatar" type="password" placeholder="${data.avatar || "www.esimerkki.fi/kuva.jpg"}">
+                        <input id="userAvatar" type="text" placeholder="${data.avatar || "www.esimerkki.fi/kuva.jpg"}">
                         <p>&nbsp;</p>
-
-                        <button id="postButton" type="submit">Päivitä</button>
                         `
 };
