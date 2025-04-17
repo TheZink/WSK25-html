@@ -117,30 +117,27 @@ createForm ? (() => {
 // Check if "profileContainer" exist before executing and adding event listeners
 
 profileContainer ? (async () => {
-    showUserData(storedUserData, profileContainer);
+    
+    await showUserData(storedUserData, profileContainer);
     
     const updateButton = document.querySelector('#updateB');
     const deleteButton = document.querySelector('#deleteB');
-
+    
     if (updateButton) {
         updateButton.addEventListener('click', () => {
             window.location.href = '/profileupdate.html'
-        })
-
+        });
     }
-
+    
     if (deleteButton) {
         deleteButton.addEventListener('click', () => {
             const purgeUser = deleteUser(storedUserToken)
             if (purgeUser){
-                sessionStorage.removeItem('userData')
-                sessionStorage.removeItem('userToken');
-                storedUserData = null;
-                storedUserToken= null;
+                sessionStorage.clear();
                 alert('Käyttäjätunnukseksi poistettiin onnistuneesti')
                 window.location.href = '/home.html';
             } else {
-                alert('Virhe!')
+                alert('Virhe!');
             }
         })
     }
@@ -158,27 +155,25 @@ profileUpdate ? (() => {
     const userPassword = document.getElementById('userPassword')
     const userEmail = document.getElementById('userEmail');
     const userAvatar = document.getElementById('userAvatar');
-
+    
     let dataStore = {};
-
+    
     postButton.addEventListener('click', async () => {
         userName.value ? dataStore.username = userName.value: null;
         userPassword.value ? dataStore.password = userPassword.value: null;
         userEmail.value ? dataStore.email = userEmail.value : null;
         userAvatar.value ? dataStore.avatar = userAvatar.value : null;
-
+        
         // Check if dataStore has any properties
         if (Object.keys(dataStore).length > 0) {
-
+            
             const putResult = await putUser(storedUserToken, dataStore);
-
+            
+            const getSession = await getUser(storedUserToken) //Fetch fresh userData
+            sessionStorage.removeItem('userData')
+            sessionStorage.setItem('userData', JSON.stringify(getSession)); //Update sessionStorage
+            
             if (putResult) {
-
-                const getSession = await getUser(storedUserToken) //Fetch fresh userData
-                console.log('updateSession ', getSession)
-                sessionStorage.removeItem('userData')
-                sessionStorage.setItem('userData', JSON.stringify(getSession)); //Update sessionStorage
-
                 window.location.href = '/profile.html';
                 alert('Tiedot päivitettiin onnistuneesti!');
 
@@ -212,7 +207,7 @@ if (storedUserData != null && storedUserToken != null) {
         logout.textContent = 'Kirjaudu ulos';
 
         logout.addEventListener('click', () => {
-            sessionStorage.removeItem('userData');
+            sessionStorage.clear();
             window.location.href = 'home.html';
 
             window.alert('Sinut kirjataan ulos ja ohjataan etusivulle');
@@ -227,7 +222,6 @@ if (window.location.href.includes('profile.html') && storedUserData == null){
     window.location.href = 'login.html';
 }
 
-// TODO: Add function, that check if favouriteRestData exist
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 };
