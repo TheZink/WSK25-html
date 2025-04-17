@@ -1,4 +1,4 @@
-import { urlRestaurantById } from '../js/baseUrl.js';
+import { urlRestaurantById, urlWeeklyMenu } from '../js/baseUrl.js';
 import { fetchData } from './util.js';
 
 export const restaurantModal = (name, address, city, postalCode, phone, company, courses) => {
@@ -46,7 +46,6 @@ export const showUserData = async (data, element) => {
 };
 
 export const postUserData = (data, element) => {
-    console.log("Menimme postUserData ja data on: ", data)
     element.innerHTML = `<h1 style="margin-top: 10px; margin-bottom: 30px; font-size: 50px;">Päivitä tietosi</h1>
                         <h3>Päivitä haluamasi tiedot. Jätä kentät tyhjäksi, jos et halua muuttaa niitä</h3>
                         <p>&nbsp;</p>
@@ -68,3 +67,46 @@ export const postUserData = (data, element) => {
                         <p>&nbsp;</p>
                         `
 };
+
+export const homeMenuData = async (token, restaurantId, element) => {
+    const getWeeklyMenu = await fetchData(urlWeeklyMenu(restaurantId))
+    const getRestaurant = await fetchData(urlRestaurantById(restaurantId))
+
+    const time = new Date();
+    const formattedDate = new Intl.DateTimeFormat("fi-FI", {
+        weekday: "long", // Day name
+        day: "numeric", // Date number
+        month: "long" // Month name
+    }).format(time);
+
+    const homeList = document.createElement('ul');
+    let menuWeeklyHtml = '';
+
+    getWeeklyMenu.days.forEach(day => {
+        menuWeeklyHtml += `<p>&nbsp;</p>`;
+        if (day.date === formattedDate)
+            { menuWeeklyHtml += `<h3 style="color: red">${day.date}</h3>`; }
+        else 
+            { menuWeeklyHtml += `<h3>${day.date}</h3>`; }
+        menuWeeklyHtml += `<p>&nbsp;</p>`;
+
+        day.courses.forEach(courses => {
+            menuWeeklyHtml += `<li style="list-style-type: none;">${courses.name}, ${courses.price || '?€'}. ${courses.diets}</li>`;
+        });
+    });
+
+    
+    element.innerHTML = `
+                        <h2>Suosikki opiskelijaravintola</h2>
+                        <p>&nbsp;</p>
+                        <h3>${getRestaurant.name}</h3>
+                        <p>${getRestaurant.address}, ${getRestaurant.city} ${getRestaurant.postalCode}
+                        <p>${getRestaurant.phone}</p>
+                        <p>&nbsp;</p>
+                        <h3>Viikon ruokalista</h3>
+                        <p>Alla näet suosikkiravintolan päiväkohtaiset ruokalistat. Tämän päivänen lista on merkattu punaisella</p>
+                        ${menuWeeklyHtml}
+                        `
+
+
+}

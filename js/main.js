@@ -1,8 +1,11 @@
 import { urlAllRestaurants, urlRestaurantById, 
     urlDailyMenu} from "./baseUrl.js";
 import { initializeMap } from "./map.js";
-import { restaurantModal, postUserData, showUserData } from "./component.js";
+import { restaurantModal, postUserData, showUserData, homeMenuData } from "./component.js";
 import { logUserIn, putUser, postUser, getUser, deleteUser} from "./auth.js";
+
+// Home.html element
+const homeFavourite = document.getElementById('favouriteRestaurant')
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
@@ -25,7 +28,14 @@ const profileUpdate = document.getElementById('profileUpdate');
 
 let storedUserData = JSON.parse(sessionStorage.getItem('userData'));
 let storedUserToken = JSON.parse(sessionStorage.getItem('userToken'));
-let favouriteRestData = JSON.parse(sessionStorage.getItem('favouriteRestData'));
+
+// Home.html
+// Check if "favouriteRestaurant" exist and user is logged in
+
+homeFavourite && storedUserData != null ? (() => {
+    homeMenuData(storedUserToken, storedUserData.favouriteRestaurant, homeFavourite);
+})()
+: null;
 
 // leaflet map
 // Statement check, if "mapContainer" exist before initializing
