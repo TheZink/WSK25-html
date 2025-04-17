@@ -1,19 +1,17 @@
 import { urlRestaurantById } from '../js/baseUrl.js';
 import { fetchData } from './util.js';
 
-export const showUserData = (data, element) => {
+export const showUserData = async (data, element) => {
     let restaurant = "";
     if(data.favouriteRestaurant) {
-        restaurant = fetchData(urlRestaurantById(data.favouriteRestaurant))
+        restaurant = await fetchData(urlRestaurantById(data.favouriteRestaurant))
     }
-
+    console.log('Profile restaurant', restaurant)
     element.innerHTML = `<h1 style="margin-top: 10px; margin-bottom: 30px; font-size: 50px;">Profiili</h1>
                     <p>Käyttäjänimi: ${data.username}</p>
                     <p>Sähköposti: ${data.email}</P>
                     <p>Suosikki ravintola: ${restaurant.name || 'Ei ole määritetty'}</p>
                     <p>&nbsp;</p>
-                    <button id="updateB">Päivitä profiili</button>
-                    <button id="deleteB">Poista profiili</button>
                     `
 };
 
