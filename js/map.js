@@ -1,4 +1,5 @@
 import { fetchData } from "./util.js";
+import { putUser } from "./auth.js";
 
 export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUrl, dailyMenuUrl, modalElement, createModal) => {
 
@@ -36,6 +37,7 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
                     <p class="popup-p">Puhelinnro: ${restaurant.phone}</p>
                     <p class="popup-p">Yhtiö: ${restaurant.company}</p>
                     <button id="${restaurant._id}">Ruokalista</button>
+                    <button id="fav">Suosikki</button>
                 `);
 
             // Handle marker click to change color
@@ -78,6 +80,25 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
                     modalElement.style.display = "none";
                 });
             });
-        }
+        };
+
+        // Save favourite restaurant to the sessionstorage, when button is pressed
+        const favouriteButton = e.popup._contentNode.querySelector('button#fav');
+        
+        if (favouriteButton){
+
+            favouriteButton.addEventListener('click', async () => {
+            const putData = { favouriteRestaurant: popupButton.id };
+            const token = JSON.parse(sessionStorage.getItem('userToken'));
+
+                if (token){
+                    await putUser(token, putData);
+                    alert("Ravintola lisätty suosikkeisiin")
+                } else {
+                    alert('Sinun pitää kirjautua sisään, jotta voit laittaa ravintolan suosikkeisiin.')
+                }
+
+            });
+        };
     });
 };

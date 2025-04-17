@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    
+}
+
+body {
+    background-image: url('../assets/backgroung.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: white;
+    margin: auto;
+    padding: 48px;
+}
+
+.container {
+    width: 60%; 
+    max-width: 1200px; 
+    background-color: #4E342E;
+    padding: 32px;
+    margin: auto;
+    margin-bottom: 300px;
+    border-radius : 10px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.header {
+    background-color: #b6a689;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.header_a > a {
+    text-decoration: none;
+    margin: 20px;
+    color: #D6D6D6;
+}
+
+.header_a > a:hover {
+    color: #7D3C40;
+}
+
+.header_a > a:active {
+    color: #7D3C40;
+}
+
+.box {
+    width: 80%;
+    padding: 0px;
+    margin: auto;
+    text-align: center;
+}
+
+.content {
+    margin-top: 0;
+    background: linear-gradient(to bottom, #b6a689, #ccc);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 24px 16px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+/* Leaflet icons*/
+.blue-icon {
+    background-color: #2474ff;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.green-icon {
+    background-color: #27ba35;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.red-icon {
+    background-color: red;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Leaflet popUp */
+.popup-p {
+    text-align: left;
+    margin-bottom: 1px;
+}
+
+/* Modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.904);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    color: white;
+    margin: 15% auto;
+    top: 50%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+  }
+  
+  .modal-content > li, ul {
+    color: rgb(255, 255, 255);
+    padding: 50px;
+    text-align: left;
+  }
+
+  .modalP {
+    margin-top: 50px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    padding-right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+  }
