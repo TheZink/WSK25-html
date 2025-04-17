@@ -1,9 +1,8 @@
 import { urlAllRestaurants, urlRestaurantById, 
     urlDailyMenu} from "./baseUrl.js";
 import { initializeMap } from "./map.js";
-import { restaurantModal } from "./component.js";
+import { restaurantModal, postUserData, showUserData } from "./component.js";
 import { logUserIn, putUser, postUser, getUser, deleteUser} from "./auth.js";
-import { postUserData, showUserData } from "./profile.js";
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
