@@ -93,6 +93,7 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
 
                 if (token){
                     await putUser(token, putData);
+                    alert("Ravintola lisätty suosikkeisiin")
                 } else {
                     alert('Sinun pitää kirjautua sisään, jotta voit laittaa ravintolan suosikkeisiin.')
                 }
