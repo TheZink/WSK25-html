@@ -38,7 +38,9 @@ export const putUser = async (token, updatedData) => {
 
     const options = {
         method: 'PUT',
-        headers: {Authorization: 'Bearer ' + token},
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token},
         body: JSON.stringify( updatedData )
     };
 
@@ -49,7 +51,9 @@ export const getUser = async (token) => {
     
     const options = {
         method: 'GET',
-        headers: { Authorization: 'Bearer ' + token }
+        headers: { 
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token }
     };
 
     return await fetchDataOptions(urlUsers()+'/token', options)
