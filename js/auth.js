@@ -33,9 +33,7 @@ export const postUser = async (username, password, email) => {
 }
 
 export const putUser = async (token, updatedData) => {
-    console.log('putUser token: ', token);
-    console.log('putUser data: ', updatedData);
-
+    
     const options = {
         method: 'PUT',
         headers: {
