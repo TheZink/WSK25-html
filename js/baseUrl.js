@@ -15,7 +15,7 @@ export const urlDailyMenu = (id) => {
 
 // Fetch restaurant weekly menu by id
 export const urlWeeklyMenu = (id) => {
-    return `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/weekly/${id}/:fi`
+    return `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/weekly/${id}/fi`
 }
 
 // Fetch user login
