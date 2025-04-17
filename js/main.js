@@ -6,6 +6,7 @@ import { logUserIn, putUser, postUser, getUser, deleteUser} from "./auth.js";
 
 // Home.html element
 const homeFavourite = document.getElementById('favouriteRestaurant')
+const headerElement = document.getElementById('header_a');
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
@@ -209,11 +210,14 @@ profileUpdate ? (() => {
 if (storedUserData != null && storedUserToken != null) {
     console.log('Retrieved user data from sessionstorage:', storedUserData);
 
-    // Add logout button and event listener, when user is logged in
-    const headerElement = document.getElementById('header_a');
+    // Add logout and profile buttons, when user is logged in. Add also event listener
     if (headerElement) {
         const logout = document.createElement('a');
         logout.textContent = 'Kirjaudu ulos';
+
+        const profile = document.createElement('a');
+        profile.textContent = 'Profiili';
+        profile.href = 'profile.html';
 
         logout.addEventListener('click', () => {
             sessionStorage.clear();
@@ -222,7 +226,16 @@ if (storedUserData != null && storedUserToken != null) {
             window.alert('Sinut kirjataan ulos ja ohjataan etusivulle');
         });
 
+        headerElement.appendChild(profile);
         headerElement.appendChild(logout);
+    }
+
+} else {
+    if (headerElement) {
+        const login = document.createElement('a');
+        login.textContent = 'Kirjaudu sisään';
+        login.href = 'login.html';
+        headerElement.appendChild(login);
     }
 }
 
