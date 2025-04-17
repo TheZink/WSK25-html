@@ -24,6 +24,6 @@ export const urlLoginUser = () => {
 }
  
 // Create or get user
-export const urlUser = () => {
+export const urlUsers = () => {
     return 'https://media2.edu.metropolia.fi/restaurant/api/v1/users'
 };
