@@ -1,4 +1,5 @@
 import { fetchData } from "./util.js";
+import { putUser } from "./auth.js";
 
 export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUrl, dailyMenuUrl, modalElement, createModal) => {
 
@@ -81,12 +82,21 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
             });
         };
 
-        // Save favourite restaurant to the sessionstorage, when "suosikki" is pressed
-        const favoriteButton = e.popup._contentNode.querySelector('button#fav');
-        if (favoriteButton){
-            favoriteButton.addEventListener('click', () => {
-                const favouriteRest = {favoriteRestaurant: popupButton.id};
-                sessionStorage.setItem('favouriteRestData', JSON.stringify(favouriteRest));
+        // Save favourite restaurant to the sessionstorage, when button is pressed
+        const favouriteButton = e.popup._contentNode.querySelector('button#fav');
+        
+        if (favouriteButton){
+
+            favouriteButton.addEventListener('click', async () => {
+            const putData = { favouriteRestaurant: popupButton.id };
+            const token = JSON.parse(sessionStorage.getItem('userToken'));
+
+                if (token){
+                    await putUser(token, putData);
+                } else {
+                    alert('Sinun pitää kirjautua sisään, jotta voit laittaa ravintolan suosikkeisiin.')
+                }
+
             });
         };
     });
