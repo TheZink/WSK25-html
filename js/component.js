@@ -40,7 +40,10 @@ export const showUserData = async (data, element) => {
     element.innerHTML = `<h1 style="margin-top: 10px; margin-bottom: 30px; font-size: 50px;">Profiili</h1>
                     <p>Käyttäjänimi: ${data.username}</p>
                     <p>Sähköposti: ${data.email}</P>
+                    <p>Käyttäjätaso: ${data.role}</p>
                     <p>Suosikki ravintola: ${restaurant.name || 'Ei ole määritetty'}</p>
+                    <p>&nbsp;</p>
+                    <img src='${data.avatar || "assets/nullPicture.png"}'
                     <p>&nbsp;</p>
                     `
 };
