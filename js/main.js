@@ -38,7 +38,7 @@ let storedMenuType = JSON.parse(sessionStorage.getItem('menuType'));
 homeFavourite && storedUserData != null ? (() => {
 
     
-    if (storedMenuType === 'weekly') {
+    if (storedMenuType === 'weekly' || !storedMenuType) {
         homeMenuWeekly(storedUserData.favouriteRestaurant, homeFavourite);
     } else {
         homeMenuDaily(storedUserData.favouriteRestaurant, homeFavourite);
