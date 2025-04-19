@@ -124,7 +124,7 @@ createForm ? (() => {
         // If registration is successful, redirect user to login.html
         if (createUser) {
             alert("Rekisteröityminen onnistui! Nyt voit kirjautua sisään!")
-            window.location.href = '/login.html';
+            window.location.href = 'login.html';
         } else {
             alert("Rekisteröityminen epäonnistui. Syynä voi olla, että käyttäjänimi on varattu tai palvelussa on katko. Käytä toista käyttäjätunnusta tai yritä myöhemmin uudelleen.")
         }
@@ -144,7 +144,7 @@ profileContainer ? (async () => {
     
     if (updateButton) {
         updateButton.addEventListener('click', () => {
-            window.location.href = '/profileupdate.html'
+            window.location.href = 'profileupdate.html'
         });
     }
     
@@ -154,7 +154,7 @@ profileContainer ? (async () => {
             if (purgeUser){
                 sessionStorage.clear();
                 alert('Käyttäjätunnukseksi poistettiin onnistuneesti')
-                window.location.href = '/home.html';
+                window.location.href = 'home.html';
             } else {
                 alert('Virhe!');
             }
@@ -192,7 +192,7 @@ profileUpdate ? (() => {
             sessionStorage.setItem('userData', JSON.stringify(getSession)); //Update sessionStorage
             
             if (putResult) {
-                window.location.href = '/profile.html';
+                window.location.href = 'profile.html';
                 alert('Tiedot päivitettiin onnistuneesti!');
 
             } else {
@@ -207,7 +207,7 @@ profileUpdate ? (() => {
     });
 
     abortButton.addEventListener('click', (evt) => {
-        window.location.href = '/profile.html'
+        window.location.href = 'profile.html'
         alert('Palataan takaisin profiilin sivulle. Tietoja ei muutettu.')
     })
 
