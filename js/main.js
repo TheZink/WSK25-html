@@ -127,7 +127,6 @@ createForm ? (() => {
             window.location.href = '/login.html';
         } else {
             alert("Rekisteröityminen epäonnistui. Syynä voi olla, että käyttäjänimi on varattu tai palvelussa on katko. Käytä toista käyttäjätunnusta tai yritä myöhemmin uudelleen.")
-            console.log("Register failed")
         }
     })
 })() 
@@ -217,7 +216,6 @@ profileUpdate ? (() => {
 
 // Restore userData from sessionstorage if not null
 if (storedUserData != null && storedUserToken != null) {
-    console.log('Retrieved user data from sessionstorage:', storedUserData);
 
     // Add logout and profile buttons, when user is logged in. Add also event listener
     if (headerElement) {
@@ -248,14 +246,11 @@ if (storedUserData != null && storedUserToken != null) {
     }
 }
 
-function handlePageChange() {
-    console.log('Sivu vaihtui');
-
-    // Redirect for unauthenticated users accessing profile.html
-    if (window.location.href.includes('profile.html') && storedUserData == null){
-        window.location.href = 'login.html';
-    }
+// Redirect for unauthenticated users accessing profile.html
+if (window.location.href.includes('profile.html') && storedUserData == null){
+    window.location.href = 'login.html';
 }
+
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
