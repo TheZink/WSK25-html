@@ -1,13 +1,26 @@
 import { fetchData } from "./util.js";
 import { putUser, getUser } from "./auth.js";
 
-export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUrl, dailyMenuUrl, modalElement, createModal) => {
+export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUrl, dailyMenuUrl, modalElement, createModal, nearestElement) => {
 
     const blueIcon = L.divIcon({ className: 'blue-icon' }); // Restaurants location color
     const greenIcon = L.divIcon({ className: 'green-icon' }); // Selected restaurant color
     const redIcon = L.divIcon({ className: 'red-icon' }); // User location color
 
     let selectedMarker = null; // To track the currently selected marker
+
+    // Function calculate distance between given coordinates in kilometers
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a = 
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    };
 
 
     // Create the map
@@ -53,10 +66,29 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
                 selectedMarker = restaurantLocation;
             });
         });
+
+        // Function sort nearest restaurants by users location
+        const restaurantsDistance = restaurants.map(restaurant => {
+            const [lon, lat] = restaurant.location.coordinates;
+            const distance = calculateDistance(userCoords.latitude, userCoords.longitude, lat, lon);
+            return {...restaurant, distance}
+        });
+
+        // Function pick 10 nearest restaurants from list
+        const nearestRestaurants = restaurantsDistance
+            .sort((a,b) => a.distance - b.distance)
+            .slice(0,10);
+
+        nearestElement.innerHTML = '';
+        nearestRestaurants.forEach(restaurant => {
+            nearestElement.innerHTML += `<p>${restaurant.name}, ${restaurant.address} ${restaurant.city}</p>`
+        })
         
     } catch (error) {
         console.error('Error fetching restaurant data:', error);
     }
+
+    
 
     // Handle popup button click
     map.on('popupopen', async (e) => {
@@ -102,4 +134,5 @@ export const initializeMap = async (userCoords, restaurantsUrl, restaurantByIdUr
             });
         };
     });
+
 };

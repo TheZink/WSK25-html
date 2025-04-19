@@ -11,6 +11,7 @@ const headerElement = document.getElementById('header_a');
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
 const mapContainer = document.getElementById('map');
+const nearestContaine = document.getElementById('nearest');
 
 // Login.html element
 const loginForm = document.getElementById('loginForm');
@@ -68,7 +69,8 @@ mapContainer ? (() => {
             urlRestaurantById,
             urlDailyMenu,
             searchModal,
-            restaurantModal
+            restaurantModal,
+            nearestContaine
         );
     }
     navigator.geolocation.getCurrentPosition(success, error, options);
