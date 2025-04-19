@@ -62,7 +62,7 @@ export const postUserData = (data, element) => {
                         <p>&nbsp;</p>
 
                         <p>Sähköpostiosoite</p>
-                        <input id="userEmail" type="emain" placeholder="${data.email}">
+                        <input id="userEmail" type="email" placeholder="${data.email}">
                         <p>&nbsp;</p>
 
                         <p>Profiilikuvan url-osoite</p>
