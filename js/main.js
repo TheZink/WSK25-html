@@ -7,9 +7,6 @@ import { logUserIn, putUser, postUser, getUser, deleteUser} from "./auth.js";
 // Home.html element
 const homeFavourite = document.getElementById('favouriteRestaurant')
 const headerElement = document.getElementById('header_a');
-const dailyRadio = document.getElementById('daily');
-const weeklyRadio = document.getElementById('weekly');
-
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
@@ -261,5 +258,3 @@ function handlePageChange() {
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 };
-
-document.addEventListener('DOMContentLoaded', handlePageChange);
