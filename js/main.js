@@ -1,12 +1,15 @@
 import { urlAllRestaurants, urlRestaurantById, 
     urlDailyMenu} from "./baseUrl.js";
 import { initializeMap } from "./map.js";
-import { restaurantModal, postUserData, showUserData, homeMenuData } from "./component.js";
+import { restaurantModal, postUserData, showUserData, homeMenuWeekly, homeMenuDaily } from "./component.js";
 import { logUserIn, putUser, postUser, getUser, deleteUser} from "./auth.js";
 
 // Home.html element
 const homeFavourite = document.getElementById('favouriteRestaurant')
 const headerElement = document.getElementById('header_a');
+const dailyRadio = document.getElementById('daily');
+const weeklyRadio = document.getElementById('weekly');
+
 
 // Search.html element
 const searchModal = document.getElementById('restaurantModal');
@@ -29,12 +32,20 @@ const profileUpdate = document.getElementById('profileUpdate');
 
 let storedUserData = JSON.parse(sessionStorage.getItem('userData'));
 let storedUserToken = JSON.parse(sessionStorage.getItem('userToken'));
+let storedMenuType = JSON.parse(sessionStorage.getItem('menuType'));
 
 // Home.html
 // Check if "favouriteRestaurant" exist and user is logged in
 
 homeFavourite && storedUserData != null ? (() => {
-    homeMenuData(storedUserToken, storedUserData.favouriteRestaurant, homeFavourite);
+
+    
+    if (storedMenuType === 'weekly') {
+        homeMenuWeekly(storedUserData.favouriteRestaurant, homeFavourite);
+    } else {
+        homeMenuDaily(storedUserData.favouriteRestaurant, homeFavourite);
+    } 
+
 })()
 : null;
 
@@ -180,7 +191,6 @@ profileUpdate ? (() => {
             const putResult = await putUser(storedUserToken, dataStore);
             
             const getSession = await getUser(storedUserToken) //Fetch fresh userData
-            sessionStorage.removeItem('userData')
             sessionStorage.setItem('userData', JSON.stringify(getSession)); //Update sessionStorage
             
             if (putResult) {
@@ -239,11 +249,17 @@ if (storedUserData != null && storedUserToken != null) {
     }
 }
 
-// Redirect for unauthenticated users accessing profile.html
-if (window.location.href.includes('profile.html') && storedUserData == null){
-    window.location.href = 'login.html';
+function handlePageChange() {
+    console.log('Sivu vaihtui');
+
+    // Redirect for unauthenticated users accessing profile.html
+    if (window.location.href.includes('profile.html') && storedUserData == null){
+        window.location.href = 'login.html';
+    }
 }
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 };
+
+document.addEventListener('DOMContentLoaded', handlePageChange);

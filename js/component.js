@@ -1,4 +1,4 @@
-import { urlRestaurantById, urlWeeklyMenu } from '../js/baseUrl.js';
+import { urlDailyMenu, urlRestaurantById, urlWeeklyMenu } from '../js/baseUrl.js';
 import { fetchData } from './util.js';
 
 export const restaurantModal = (name, address, city, postalCode, phone, company, courses) => {
@@ -68,7 +68,7 @@ export const postUserData = (data, element) => {
                         `
 };
 
-export const homeMenuData = async (token, restaurantId, element) => {
+export const homeMenuWeekly = async (restaurantId, element) => {
     const getWeeklyMenu = await fetchData(urlWeeklyMenu(restaurantId))
     const getRestaurant = await fetchData(urlRestaurantById(restaurantId))
 
@@ -79,7 +79,6 @@ export const homeMenuData = async (token, restaurantId, element) => {
         month: "long" // Month name
     }).format(time);
 
-    const homeList = document.createElement('ul');
     let menuWeeklyHtml = '';
 
     getWeeklyMenu.days.forEach(day => {
@@ -94,8 +93,7 @@ export const homeMenuData = async (token, restaurantId, element) => {
             menuWeeklyHtml += `<li style="list-style-type: none;">${courses.name}, ${courses.price || '?€'}. ${courses.diets}</li>`;
         });
     });
-
-    
+  
     element.innerHTML = `
                         <h2>Suosikki opiskelijaravintola</h2>
                         <p>&nbsp;</p>
@@ -103,10 +101,75 @@ export const homeMenuData = async (token, restaurantId, element) => {
                         <p>${getRestaurant.address}, ${getRestaurant.city} ${getRestaurant.postalCode}
                         <p>${getRestaurant.phone}</p>
                         <p>&nbsp;</p>
+
+                        <input type="radio" id="weekly" name="menu_type" value="HTML" checked>
+                        <label for="html">Viikkolista</label><br>
+
+                        <input type="radio" id="daily" name="menu_type" value="HTML">
+                        <label for="html">Päivälista</label><br>
+                        <p>&nbsp;</p>
+
                         <h3>Viikon ruokalista</h3>
+                    
                         <p>Alla näet suosikkiravintolan päiväkohtaiset ruokalistat. Tämän päivänen lista on merkattu punaisella</p>
+                       
                         ${menuWeeklyHtml}
                         `
 
+    const dailyRadio = document.getElementById('daily');
 
+    if(dailyRadio) {
+        dailyRadio.addEventListener('change', () => {
+            sessionStorage.setItem('menuType',JSON.stringify('daily'))
+            homeMenuDaily(restaurantId,element);
+        })
+    } else {
+        console.warn('dailyRadio element not found');
+    };
 }
+
+export const homeMenuDaily = async (restaurantId, element) => {
+    const getDailyMenu = await fetchData(urlDailyMenu(restaurantId))
+    const getRestaurant = await fetchData(urlRestaurantById(restaurantId))
+
+    const homeList = document.createElement('ul');
+    let menuDailyHtml = '';
+
+    getDailyMenu.courses.forEach(course => {
+        menuDailyHtml += `<p>&nbsp;</p>`;
+        menuDailyHtml += `<li style="list-style-type: none;">${course.name}, ${course.price || '?€'}. ${course.diets}</li>`;
+        menuDailyHtml += `<p>&nbsp;</p>`
+    });
+  
+    element.innerHTML = `
+                        <h2>Suosikki opiskelijaravintola</h2>
+                        <p>&nbsp;</p>
+                        <h3>${getRestaurant.name}</h3>
+                        <p>${getRestaurant.address}, ${getRestaurant.city} ${getRestaurant.postalCode}
+                        <p>${getRestaurant.phone}</p>
+                        <p>&nbsp;</p>
+
+                        <p>Ruokalistan esitys</p>
+                        <input type="radio" id="weekly" name="menu_type" value="HTML" >
+                        <label for="html">Viikkolista</label><br>
+
+                        <input type="radio" id="daily" name="menu_type" value="HTML" checked>
+                        <label for="html">Päivälista</label><br>
+                        <p>&nbsp;</p>
+
+                        <h3>Päivän ruokalista</h3>
+                    
+                        <p>Alla näet suosikkiravintolan päiväkohtaisen ruokalistan.</p>
+                        ${menuDailyHtml}
+                        `
+    const weeklyRadio = document.getElementById('weekly');
+
+    if(weeklyRadio) {
+        weeklyRadio.addEventListener('change', () => {
+            sessionStorage.setItem('menuType',JSON.stringify('weekly'))
+            homeMenuWeekly(restaurantId,element);
+        })
+    } else {
+        console.warn('weeklyRadio element not found');
+    }   
+};
