@@ -105,6 +105,7 @@ export const homeMenuWeekly = async (restaurantId, element) => {
                         <p>${getRestaurant.phone}</p>
                         <p>&nbsp;</p>
 
+                        <h3>Ruokalistan esitys</h3>
                         <input type="radio" id="weekly" name="menu_type" value="HTML" checked>
                         <label for="html">Viikkolista</label><br>
 
@@ -114,7 +115,7 @@ export const homeMenuWeekly = async (restaurantId, element) => {
 
                         <h3>Viikon ruokalista</h3>
                     
-                        <p>Alla näet suosikkiravintolan päiväkohtaiset ruokalistat. Tämän päivänen lista on merkattu punaisella</p>
+                        <p>Alla näet suosikkiravintolan viikon ruokalistan. Tämän päivänen ruokalista on merkattu punaisella</p>
                        
                         ${menuWeeklyHtml}
                         `
